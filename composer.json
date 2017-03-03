@@ -1,0 +1,31 @@
+{
+  "name": "spiral/pieces",
+  "description": "Spiral Framework Pieces Module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anton Titov",
+      "email": "wolfy.jd@gmail.com"
+    },
+    {
+      "name": "Lev Seleznev",
+      "email": "lev@spiralscout.com"
+    },
+    {
+      "name": "Dmitry Mironov",
+      "email": "dmitry.mironov@spiralscout.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "spiral/components": "0.8.*",
+    "spiral/framework": "0.8.*",
+    "spiral/security": "0.1.*",
+    "spiral/auth": "0.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spiral\\": "source/"
+    }
+  }
+}
