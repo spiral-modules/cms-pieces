@@ -1,8 +1,8 @@
 # Pieces Module
 
-This module provide ability to store page pieces data in database (currently ORM only) and 
+This module provide ability to store page pieces data in database (currently ORM only) and
 access it via Web-API. Also it's compiles two versions of views: one for site editor and one for
-common site user. The functionality can be sometimes useful especially with something like 
+common site user. The functionality can be sometimes useful especially with something like
 [Redaxtor](https://redaxtor.github.io/).
 
 ## Installation
@@ -20,7 +20,7 @@ $ ./spiral up
 ```php
 $http->addRoute(
     (new Route('api_pieces', 'api/cms/pieces/<action>',
-        'Controllers\Api\PiecesController::<action>')
+        'Spiral\Pieces\Controllers\PiecesController::<action>')
     )->withMiddleware(JsonParser::class)
 );
 $http->addRoute(
@@ -40,7 +40,7 @@ Check `app/config/modules/pieces.php` for details.
 
 ### Metadata
 
-There are two alternatives to include metadata to your pages: "static" and "runtime". First one will 
+There are two alternatives to include metadata to your pages: "static" and "runtime". First one will
 fully compile during views compilation and there will be no requests to database during page load.
 Second one will not.
 
@@ -52,7 +52,7 @@ Second one will not.
 </pieces:meta>
 ```
 
-The code above is "static" metadata. You can optionally pass some defaults: `title`, `description`, 
+The code above is "static" metadata. You can optionally pass some defaults: `title`, `description`,
 `keywords` arguments and put custom default html (see code above).
 
 If you need something a bit more complex than dumb static pages, then currently you need to use
