@@ -8,7 +8,8 @@ $piece = $pieces->getPiece($id, $content, $this->view, $this->namespace);
 
 if ($pieces->canEdit()) {
     ?>
-    <div data-piece="html" data-id="<?= $piece->getCode() #compile ?>">
+    <div data-piece="${piece-type|html}" data-id="<?= $piece->getCode() #compile ?>"
+         node:attributes>
         <?= $piece->getContent() #compile ?>
     </div>
     <?php #compile
