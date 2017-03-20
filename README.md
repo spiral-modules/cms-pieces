@@ -95,7 +95,7 @@ Currently there's only "static" pieces.
 </pieces:piece>
 ```
 
-In editor mode content of the piece will be wrapped in diff like this:
+In editor mode content of the piece will be wrapped in div like this:
 ```html
 <div data-piece="html" data-id="sample-piece">
   Piece content.
