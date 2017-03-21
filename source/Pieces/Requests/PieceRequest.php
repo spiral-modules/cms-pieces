@@ -23,7 +23,7 @@ class PieceRequest extends RequestFilter
     /**
      * @var array
      */
-    protected $schema = [
+    const SCHEMA = [
         'code' => 'data:id',
         'data' => 'data:data'
     ];
@@ -31,7 +31,7 @@ class PieceRequest extends RequestFilter
     /**
      * @var array
      */
-    protected $validates = [
+    const VALIDATES = [
         'code' => ['notEmpty', 'string'],
         'data' => ['array'],
     ];
@@ -50,7 +50,7 @@ class PieceRequest extends RequestFilter
     public function getContent()
     {
         /** @var Isolator $isolator */
-        $isolator = $this->container()->get(Isolator::class);
+        $isolator = spiral(Isolator::class);
         $isolated = $isolator->isolatePHP($this->data['html']);
 
         return $isolated;

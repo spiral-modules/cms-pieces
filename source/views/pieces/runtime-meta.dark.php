@@ -30,7 +30,7 @@ $meta = $pieces->getMeta($namespace, $view, $code, $defaults);
 
 <title><?= e($meta->title) ?></title>
 
-<?php if ($pieces->canEdit()): ?>
+<?php if ($environment->getValue('cms.editable')): ?>
     <script>
         window.metadata = <?= json_encode($meta) ?>;
     </script>

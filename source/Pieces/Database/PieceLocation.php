@@ -25,7 +25,7 @@ class PieceLocation extends Record
     /**
      * @var array
      */
-    protected $schema = [
+    const SCHEMA = [
         'id'        => 'primary',
         'view'      => 'string(255)',
         'namespace' => 'string(255)'
@@ -34,5 +34,5 @@ class PieceLocation extends Record
     /**
      * @var array
      */
-    protected $fillable = ['view', 'namespace'];
+    const FILLABLE = ['view', 'namespace'];
 }

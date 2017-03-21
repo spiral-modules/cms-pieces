@@ -7,12 +7,11 @@
  */
 namespace Spiral\Pieces\Controllers;
 
-use Interop\Container\ContainerInterface as InteropContainer;
 use Spiral\Core\Controller;
+use Spiral\Core\Traits\AuthorizesTrait;
 use Spiral\Pieces\Configs\PiecesConfig;
 use Spiral\Pieces\Pieces;
 use Spiral\Pieces\Requests\PieceRequest;
-use Spiral\Security\Traits\AuthorizesTrait;
 use Spiral\Translator\Traits\TranslatorTrait;
 
 /**
@@ -32,13 +31,10 @@ class PiecesController extends Controller
     /**
      * PiecesController constructor.
      *
-     * @param PiecesConfig          $config
-     * @param InteropContainer|null $container
+     * @param PiecesConfig $config
      */
-    public function __construct(PiecesConfig $config, InteropContainer $container = null)
+    public function __construct(PiecesConfig $config)
     {
-        parent::__construct($container);
-
         $this->config = $config;
     }
 

@@ -7,11 +7,11 @@
  */
 namespace Spiral\Pieces\Controllers;
 
-use Spiral\Pieces\Requests\MetaRequest;
 use Spiral\Core\Controller;
+use Spiral\Core\Traits\AuthorizesTrait;
 use Spiral\Pieces\Configs\PiecesConfig;
 use Spiral\Pieces\Pieces;
-use Spiral\Security\Traits\AuthorizesTrait;
+use Spiral\Pieces\Requests\MetaRequest;
 use Spiral\Translator\Traits\TranslatorTrait;
 
 /**
@@ -47,7 +47,7 @@ class MetaController extends Controller
             ];
         }
 
-        $meta->setFields($request->publicFields());
+        $meta->setFields($request->getFields());
         $meta->save();
 
         $pieces->recompileMeta($meta);

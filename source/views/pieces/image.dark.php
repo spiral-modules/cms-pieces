@@ -1,4 +1,5 @@
 <?php #compile
+/* @var \Spiral\Views\DynamicEnvironment $environment */
 ob_start(); ?>${id}${name}<?php $id = ob_get_clean(); #compile
 ob_start(); ?>${src}<?php $src = ob_get_clean(); #compile
 ob_start(); ?>${alt}<?php $alt = ob_get_clean(); #compile
@@ -14,7 +15,7 @@ $piece = $pieces->getPiece($id, $encoded, $this->view, $this->namespace);
 $decoded = json_decode($piece->content, true);
 ?>
 
-<?php if ($pieces->canEdit()): #compile ?>
+<?php if ($environment->getValue('cms.editable')): #compile ?>
     <img data-piece="image" data-id="${name}" src="<?= $decoded['src'] #compile  ?>"
          alt="<?= $decoded['alt'] #compile  ?>" node:attributes>
 <?php else: #compile ?>

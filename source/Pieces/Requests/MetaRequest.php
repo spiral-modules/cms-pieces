@@ -29,7 +29,7 @@ class MetaRequest extends RequestFilter
     /**
      * @var array
      */
-    protected $schema = [
+    const SCHEMA = [
         // metadata id
         'namespace'   => 'data:namespace',
         'view'        => 'data:view',
@@ -44,7 +44,7 @@ class MetaRequest extends RequestFilter
     /**
      * @var array
      */
-    protected $validates = [
+    const VALIDATES = [
         'namespace' => [
             'notEmpty',
         ],
@@ -59,7 +59,7 @@ class MetaRequest extends RequestFilter
     /**
      * @var array
      */
-    protected $getters = [
+    const GETTERS = [
         'html' => ['self', 'getHtml'],
     ];
 
@@ -69,7 +69,7 @@ class MetaRequest extends RequestFilter
     protected function getHtml(): string
     {
         /** @var Isolator $isolator */
-        $isolator = $this->container()->get(Isolator::class);
+        $isolator = spiral(Isolator::class);
         $isolated = $isolator->isolatePHP($this->getField('html', "", false));
 
         return $isolated;

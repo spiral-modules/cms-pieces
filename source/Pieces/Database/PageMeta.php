@@ -34,10 +34,7 @@ class PageMeta extends Record
 {
     use TimestampsTrait;
 
-    /**
-     * @var array
-     */
-    protected $schema = [
+    const SCHEMA = [
         'id' => 'primary',
 
         'namespace' => 'string',
@@ -50,10 +47,9 @@ class PageMeta extends Record
         'html'        => 'text',
     ];
 
-    /**
-     * @var array
-     */
-    protected $indexes = [
+    const INDEXES = [
         ['namespace', 'view', 'code', self::UNIQUE],
     ];
+
+    const SECURED = [];
 }

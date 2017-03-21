@@ -10,6 +10,7 @@ namespace Spiral\Pieces\Database;
 use Spiral\Models\Accessors\SqlTimestamp;
 use Spiral\Models\Traits\TimestampsTrait;
 use Spiral\ORM\Entities\RecordIterator;
+use Spiral\ORM\Entities\Relations\HasManyRelation;
 use Spiral\ORM\Record;
 
 /**
@@ -17,13 +18,13 @@ use Spiral\ORM\Record;
  *
  * @package Spiral\Pieces\Database
  *
- * @property int            $id
- * @property string         $code
- * @property string|null    $content
- * @property RecordIterator $locations
+ * @property int                             $id
+ * @property string                          $code
+ * @property string|null                     $content
+ * @property HasManyRelation|PieceLocation[] $locations
  *
- * @property SqlTimestamp   $time_created
- * @property SqlTimestamp   $time_updated
+ * @property SqlTimestamp                    $time_created
+ * @property SqlTimestamp                    $time_updated
  */
 class Piece extends Record
 {
@@ -32,7 +33,7 @@ class Piece extends Record
     /**
      * @var array
      */
-    protected $schema = [
+    const SCHEMA = [
         'id'        => 'primary',
 
         //Piece identification
@@ -51,14 +52,14 @@ class Piece extends Record
     /**
      * @var array
      */
-    protected $indexes = [
+    const INDEXES = [
         [self::UNIQUE, 'code']
     ];
 
     /**
      * @var array
      */
-    protected $fillable = ['code', 'content'];
+    const FILLABLE = ['code', 'content'];
 
     /**
      * @return string

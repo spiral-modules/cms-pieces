@@ -1,5 +1,5 @@
 <?php #compile
-ob_start(); ?>${code}<?php $code = ob_get_clean(); #compile
+/* @var \Spiral\Views\DynamicEnvironment $environment */
 ob_start(); ?>${title}<?php $title = ob_get_clean(); #compile
 ob_start(); ?>${description}<?php $description = ob_get_clean(); #compile
 ob_start(); ?>${keywords}<?php $keywords = ob_get_clean(); #compile
@@ -18,7 +18,7 @@ $meta = $pieces->getMeta($this->namespace, $this->view, "static", $defaults);
 
 <title><?= e($meta->title) #compile ?></title>
 
-<?php if ($pieces->canEdit()): #compile ?>
+<?php if ($environment->getValue('cms.editable')): #compile ?>
     <script>
         window.metadata = <?= json_encode($meta) #compile ?>;
     </script>

@@ -8,7 +8,6 @@
 namespace Spiral\Pieces;
 
 use Spiral\Auth\ContextInterface;
-use Spiral\Core\ContainerInterface;
 use Spiral\Core\Service;
 use Spiral\ORM\RecordEntity;
 use Spiral\Pieces\Configs\PiecesConfig;
@@ -42,13 +41,10 @@ class Pieces extends Service
     private $config = null;
 
     /**
-     * @param PiecesConfig       $config
-     * @param ContainerInterface $container
+     * @param PiecesConfig $config
      */
-    public function __construct(PiecesConfig $config, ContainerInterface $container)
+    public function __construct(PiecesConfig $config)
     {
-        parent::__construct($container);
-
         $this->config = $config;
     }
 
@@ -108,7 +104,7 @@ class Pieces extends Service
     ): Piece {
         if (empty($piece = $this->findPiece($code))) {
             /** @var Piece $piece */
-            $piece = Piece::create(['code' => $code], $this->orm);
+            $piece = $this->orm->source(Piece::class)->create(['code' => $code]);
 
             $piece->setContent($defaultContent);
         }
@@ -133,7 +129,7 @@ class Pieces extends Service
     ): PageMeta {
         if (empty($meta = $this->findMeta($namespace, $view, $code))) {
             $data = compact('namespace', 'view', 'code') + $defaults;
-            $meta = PageMeta::create($data, $this->orm);
+            $meta = $this->orm->source(PageMeta::class)->create($data);
             $meta->save();
         }
 
@@ -153,10 +149,10 @@ class Pieces extends Service
 
             //We have to create two versions of template, for editing and not
             $this->editable = false;
-            $this->views->compile($viewPath, true);
+            $this->views->compile($viewPath);
 
             $this->editable = true;
-            $this->views->compile($viewPath, true);
+            $this->views->compile($viewPath);
         } catch (ViewsException $e) {
             //Nothing to do
         } finally {
@@ -211,7 +207,8 @@ class Pieces extends Service
         }
 
         if (!$hasLocation) {
-            $location = PieceLocation::create(compact('view', 'namespace'), $this->orm);
+            $location = $this->orm->source(PieceLocation::class)
+                ->create(compact('view', 'namespace'));
             $location->piece = $piece;
             $location->save();
         }

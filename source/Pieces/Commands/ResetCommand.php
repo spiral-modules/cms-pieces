@@ -22,12 +22,12 @@ class ResetCommand extends Command
     /**
      * @var string
      */
-    protected $name = 'pieces:reset';
+    const NAME = 'pieces:reset';
 
     /**
      * @var string
      */
-    protected $description = 'Delete all pieces from database and recompile views';
+    const DESCRIPTION = 'Delete all pieces from database and recompile views';
 
     /**
      * @param ConsoleDispatcher $dispatcher
@@ -46,6 +46,6 @@ class ResetCommand extends Command
             $meta->delete();
         }
 
-        $dispatcher->command('views:compile');
+        $dispatcher->run('views:compile');
     }
 }
