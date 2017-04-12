@@ -67,8 +67,8 @@ arguments, but `title`, `description` and `keywords` are still optional.
 ?>
 
 <pieces:meta title="<?= $entity->title ?>" description="<?= $entity->description ?>"
-             namespace="<?= $this->namespace #compile ?>" view="<?= $this->view #compile ?>">
-             code="<?= $entity->id ?>"
+             namespace="<?= $this->namespace #compile ?>" view="<?= $this->view #compile ?>"
+             code="<?= $entity->id ?>">
     <meta name="foo" content="bar">
 </pieces:meta>
 ```
