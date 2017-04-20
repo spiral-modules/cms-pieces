@@ -9,6 +9,7 @@
 namespace Spiral\Pieces;
 
 use Spiral\Auth\ContextInterface;
+use Spiral\Core\ContainerInterface;
 use Spiral\Core\Service;
 use Spiral\ORM\RecordEntity;
 use Spiral\Pieces\Configs\PiecesConfig;
@@ -31,21 +32,23 @@ class Pieces extends Service
     use GuardedTrait;
 
     /**
-     * @var null|bool
-     */
-    private $editable = null;
-
-    /**
      * @var PiecesConfig
      */
     private $config = null;
 
     /**
-     * @param PiecesConfig $config
+     * @var \Spiral\Core\ContainerInterface
      */
-    public function __construct(PiecesConfig $config)
+    protected $container;
+
+    /**
+     * @param \Spiral\Pieces\Configs\PiecesConfig $config
+     * @param \Spiral\Core\ContainerInterface     $container
+     */
+    public function __construct(PiecesConfig $config, ContainerInterface $container)
     {
         $this->config = $config;
+        $this->container = $container;
     }
 
     /**
@@ -53,10 +56,6 @@ class Pieces extends Service
      */
     public function canEdit(): bool
     {
-        if (!is_null($this->editable)) {
-            return $this->editable;
-        }
-
         // robots can't edit :(
         if (!$this->container->has(ContextInterface::class)) {
             return false;
@@ -148,18 +147,17 @@ class Pieces extends Service
      */
     public function compileView(string $namespace, string $view)
     {
-        $views = $this->views;
-        $environment = $views->getEnvironment();
+        $environment = $this->views->getEnvironment();
 
         $viewPath = $namespace . ViewManager::NS_SEPARATOR . $view;
 
         //Compile for editors
-        $views->withEnvironment($environment->withDependency('cms.editable', function () {
+        $this->views->withEnvironment($environment->withDependency('cms.editable', function () {
             return true;
         }))->compile($viewPath);
 
         //Compile for non-editors
-        $views->withEnvironment($environment->withDependency('cms.editable', function () {
+        $this->views->withEnvironment($environment->withDependency('cms.editable', function () {
             return false;
         }))->compile($viewPath);
     }
