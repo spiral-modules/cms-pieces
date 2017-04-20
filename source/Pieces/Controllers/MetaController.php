@@ -50,7 +50,7 @@ class MetaController extends Controller
         $meta->setFields($request->getFields());
         $meta->save();
 
-        $pieces->compileMeta($meta);
+        $pieces->pushMeta($meta);
 
         return [
             'status' => 200,

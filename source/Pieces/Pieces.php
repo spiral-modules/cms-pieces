@@ -169,7 +169,7 @@ class Pieces extends Service
      *
      * @param Piece $piece
      */
-    public function compilePiece(Piece $piece)
+    public function pushPiece(Piece $piece)
     {
         /** @var PieceLocation $location */
         foreach ($piece->locations as $location) {
@@ -182,7 +182,7 @@ class Pieces extends Service
      *
      * @param PageMeta $meta
      */
-    public function compileMeta(PageMeta $meta)
+    public function pushMeta(PageMeta $meta)
     {
         $this->compileView($meta->namespace, $meta->view);
     }
