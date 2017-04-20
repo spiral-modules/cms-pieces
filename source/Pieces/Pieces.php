@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Lev Seleznev
  */
+
 namespace Spiral\Pieces;
 
 use Spiral\Auth\ContextInterface;
@@ -15,7 +16,6 @@ use Spiral\Pieces\Database\PageMeta;
 use Spiral\Pieces\Database\Piece;
 use Spiral\Pieces\Database\PieceLocation;
 use Spiral\Security\Traits\GuardedTrait;
-use Spiral\Views\Exceptions\ViewsException;
 use Spiral\Views\ViewManager;
 
 /**
@@ -51,7 +51,7 @@ class Pieces extends Service
     /**
      * @return bool
      */
-    public function canEdit()
+    public function canEdit(): bool
     {
         if (!is_null($this->editable)) {
             return $this->editable;
@@ -69,6 +69,7 @@ class Pieces extends Service
      * Find piece by code.
      *
      * @param string $code
+     *
      * @return Piece|RecordEntity|null
      */
     public function findPiece(string $code)
@@ -80,6 +81,7 @@ class Pieces extends Service
      * @param string $namespace
      * @param string $view
      * @param string $code
+     *
      * @return null|RecordEntity|PageMeta
      */
     public function findMeta(string $namespace, string $view, string $code)
@@ -94,6 +96,7 @@ class Pieces extends Service
      * @param string $defaultContent
      * @param string $view
      * @param string $namespace
+     *
      * @return Piece
      */
     public function getPiece(
@@ -119,6 +122,7 @@ class Pieces extends Service
      * @param string $view
      * @param string $code
      * @param array  $defaults
+     *
      * @return PageMeta
      */
     public function getMeta(
@@ -142,22 +146,22 @@ class Pieces extends Service
      * @param string $namespace
      * @param string $view
      */
-    public function recompileView(string $namespace, string $view)
+    public function compileView(string $namespace, string $view)
     {
-        try {
-            $viewPath = $namespace . ViewManager::NS_SEPARATOR . $view;
+        $views = $this->views;
+        $environment = $views->getEnvironment();
 
-            //We have to create two versions of template, for editing and not
-            $this->editable = false;
-            $this->views->compile($viewPath);
+        $viewPath = $namespace . ViewManager::NS_SEPARATOR . $view;
 
-            $this->editable = true;
-            $this->views->compile($viewPath);
-        } catch (ViewsException $e) {
-            //Nothing to do
-        } finally {
-            $this->editable = null;
-        }
+        //Compile for editors
+        $views->withEnvironment($environment->withDependency('cms.editable', function () {
+            return true;
+        }))->compile($viewPath);
+
+        //Compile for non-editors
+        $views->withEnvironment($environment->withDependency('cms.editable', function () {
+            return false;
+        }))->compile($viewPath);
     }
 
     /**
@@ -165,11 +169,11 @@ class Pieces extends Service
      *
      * @param Piece $piece
      */
-    public function recompilePiece(Piece $piece)
+    public function compilePiece(Piece $piece)
     {
         /** @var PieceLocation $location */
         foreach ($piece->locations as $location) {
-            $this->recompileView($location->namespace, $location->view);
+            $this->compileView($location->namespace, $location->view);
         }
     }
 
@@ -178,9 +182,9 @@ class Pieces extends Service
      *
      * @param PageMeta $meta
      */
-    public function recompileMeta(PageMeta $meta)
+    public function compileMeta(PageMeta $meta)
     {
-        $this->recompileView($meta->namespace, $meta->view);
+        $this->compileView($meta->namespace, $meta->view);
     }
 
     /**
@@ -189,9 +193,10 @@ class Pieces extends Service
      * @param Piece  $piece
      * @param string $view
      * @param string $namespace
+     *
      * @return Piece
      */
-    protected function ensureLocation(Piece $piece, $view, $namespace)
+    protected function ensureLocation(Piece $piece, string $view, string $namespace): Piece
     {
         if (!$piece->isLoaded()) {
             $piece->save();
@@ -207,8 +212,10 @@ class Pieces extends Service
         }
 
         if (!$hasLocation) {
-            $location = $this->orm->source(PieceLocation::class)
-                ->create(compact('view', 'namespace'));
+            $location = $this->orm->source(PieceLocation::class)->create(compact(
+                'view',
+                'namespace'
+            ));
             $location->piece = $piece;
             $location->save();
         }
