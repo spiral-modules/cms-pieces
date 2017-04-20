@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Dmitry Mironov
  */
+
 namespace Spiral\Pieces\Commands;
 
 use Spiral\Console\Command;
@@ -19,14 +20,7 @@ use Spiral\Pieces\Database\Piece;
  */
 class ResetCommand extends Command
 {
-    /**
-     * @var string
-     */
-    const NAME = 'pieces:reset';
-
-    /**
-     * @var string
-     */
+    const NAME        = 'pieces:reset';
     const DESCRIPTION = 'Delete all pieces from database and recompile views';
 
     /**
