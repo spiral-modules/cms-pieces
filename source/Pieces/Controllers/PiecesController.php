@@ -64,7 +64,7 @@ class PiecesController extends Controller
         $piece->setContent($request->getContent());
         $piece->save();
 
-        $cms->pushPiece($piece);
+        $cms->refreshPiece($piece);
 
         return [
             'status'  => 200,

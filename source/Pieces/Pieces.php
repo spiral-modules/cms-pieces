@@ -154,12 +154,12 @@ class Pieces extends Service
         //Compile for editors
         $this->views->withEnvironment($environment->withDependency('cms.editable', function () {
             return true;
-        }))->compile($viewPath);
+        }))->compile($viewPath, true);
 
         //Compile for non-editors
         $this->views->withEnvironment($environment->withDependency('cms.editable', function () {
             return false;
-        }))->compile($viewPath);
+        }))->compile($viewPath, true);
     }
 
     /**
@@ -167,7 +167,7 @@ class Pieces extends Service
      *
      * @param Piece $piece
      */
-    public function pushPiece(Piece $piece)
+    public function refreshPiece(Piece $piece)
     {
         /** @var PieceLocation $location */
         foreach ($piece->locations as $location) {
@@ -180,7 +180,7 @@ class Pieces extends Service
      *
      * @param PageMeta $meta
      */
-    public function pushMeta(PageMeta $meta)
+    public function refreshMeta(PageMeta $meta)
     {
         $this->compileView($meta->namespace, $meta->view);
     }
