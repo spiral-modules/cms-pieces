@@ -9,7 +9,9 @@ $defaults = compact('title', 'description', 'keywords', 'html');
 
 /** @var \Spiral\Pieces\Pieces $pieces */
 $pieces = spiral(\Spiral\Pieces\Pieces::class);
-$meta = $pieces->getMeta($this->namespace, $this->view, "static", $defaults);
+
+/** @var \Spiral\Views\ViewSource $view*/
+$meta = $pieces->getMeta($view->getNamespace(), $view->getName(), "static", $defaults);
 ?>
 
 <meta name="description" content="<?= e($meta->description) #compile ?>">

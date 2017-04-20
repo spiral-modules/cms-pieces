@@ -4,7 +4,9 @@ ob_start(); ?>${context}<?php $content = ob_get_clean(); #compile
 
 /** @var \Spiral\Pieces\Pieces $pieces */
 $pieces = spiral(\Spiral\Pieces\Pieces::class);
-$piece = $pieces->getPiece($id, $content, $this->view, $this->namespace);
+
+/** @var \Spiral\Views\ViewSource $view*/
+$piece = $pieces->getPiece($id, $content, $view->getName(), $view->getNamespace());
 
 /* @var \Spiral\Views\DynamicEnvironment $environment */
 
