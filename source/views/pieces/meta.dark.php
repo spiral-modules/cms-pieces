@@ -16,12 +16,15 @@ $meta = $pieces->getMeta($view->getNamespace(), $view->getName(), "static", $def
 
 <meta name="description" content="<?= e($meta->description) #compile ?>">
 <meta name="keywords" content="<?= e($meta->keywords) #compile ?>">
+
 <?= $meta->html #compile ?>
 
 <title><?= e($meta->title) #compile ?></title>
 
 <?php if ($environment->getValue('cms.editable')): #compile ?>
-    <script>
-        window.metadata = <?= json_encode($meta) #compile ?>;
-    </script>
+    <?php if('${json|true}' == 'true'): #compile ?>
+        <script>
+            window.metadata = <?= json_encode($meta) #compile ?>;
+        </script>
+    <?php endif; #compile ?>
 <?php endif; #compile ?>
