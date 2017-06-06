@@ -16,5 +16,7 @@ if ($environment->getValue('cms.editable')) : ?>
         <?= $piece->getContent() #compile ?>
     </div>
 <?php else: #compile ?>
-    <?= $piece->getContent(); #compile ?>
+    <div>
+        <?= $piece->getContent(); #compile ?>
+    </div>
 <?php endif; #compile ?>
