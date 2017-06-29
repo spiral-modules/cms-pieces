@@ -1,5 +1,5 @@
 {
-  "name": "spiral/cms-pieces",
+  "name": "spiral/pieces",
   "description": "Spiral Framework Pieces Module",
   "license": "MIT",
   "authors": [
@@ -19,6 +19,7 @@
   "require": {
     "php": ">=7.0",
     "spiral/framework": "^1.0",
+    "spiral/storage": "^1.0",
     "spiral/auth": "^0.9",
     "oscarotero/psr7-middlewares": "^3.20"
   },
