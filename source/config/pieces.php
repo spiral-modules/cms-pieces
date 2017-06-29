@@ -10,5 +10,16 @@ return [
     /*
      * Permission which is required for piece editing.
      */
-    'permission' => 'keeper.pieces.edit'
+    'permission' => 'keeper.pieces.edit',
+
+    /*
+     * Image uploads.
+     */
+    'images'     => [
+        'storage'    => 'cms.images',
+        'thumbnails' => [
+            'width'  => 120,
+            'height' => 120
+        ]
+    ]
 ];

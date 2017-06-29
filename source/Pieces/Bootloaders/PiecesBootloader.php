@@ -26,7 +26,7 @@ class PiecesBootloader extends Bootloader
     {
         $routes = [];
         $routes[] = new Route(
-            'api.pieces',
+            'api.pieces.html',
             'api/cms/pieces[/<action>]',
             'Spiral\Pieces\Controllers\PiecesController::<action>'
         );
@@ -34,6 +34,12 @@ class PiecesBootloader extends Bootloader
             'api.pieces.meta',
             'api/cms/meta[/<action>]',
             'Spiral\Pieces\Controllers\MetaController::<action>'
+        );
+
+        $routes[] = new Route(
+            'api.pieces.images',
+            'api/cms/images[/<action>]',
+            'Spiral\Pieces\Controllers\ImagesController::<action>'
         );
 
         /** @var Route $route */

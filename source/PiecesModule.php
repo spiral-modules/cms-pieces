@@ -5,6 +5,7 @@
  * @licence   MIT
  * @author    Dmitry Mironov
  */
+
 namespace Spiral;
 
 use Spiral\Core\DirectoriesInterface;
@@ -31,6 +32,7 @@ class PiecesModule implements ModuleInterface
         $registrator->configure('views', 'namespaces.default', 'spiral/pieces', [
             "directory('libraries') . 'spiral/pieces/source/views/'",
         ]);
+
         $registrator->configure('views', 'environment', 'spiral/pieces', [
             "'cms.editable' => [\\$service::class, 'canEdit'],",
         ]);
@@ -38,7 +40,31 @@ class PiecesModule implements ModuleInterface
         $registrator->configure('tokenizer', 'directories', 'spiral/pieces', [
             "directory('libraries') . 'spiral/pieces/source/',",
         ]);
+
+        $registrator->configure('databases', 'aliases', 'spiral/pieces', [
+            "'pieces' => 'default',",
+        ]);
+
+        $registrator->configure('storage', 'servers', 'spiral/pieces', [
+            "'webroot' => [",
+            "    'class'   => Servers\LocalServer::class,",
+            "    'options' => '",
+            "        'home' => directory('root') . 'webroot/'",
+            "    ]",
+            " ],"
+        ]);
+
+        $registrator->configure('storage', 'buckets', 'spiral/pieces', [
+            "'cms.images' => [",
+            "    'server'  => 'webroot',",
+            "    'prefix'  => '/images/',",
+            "    'options' => [",
+            "        'directory' => 'images/',",
+            "    ],",
+            "],"
+        ]);
     }
+
     /**
      * @inheritdoc
      */

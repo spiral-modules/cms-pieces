@@ -31,6 +31,8 @@ class Piece extends Record
 {
     use TimestampsTrait;
 
+    const DATABASE = 'pieces';
+
     /**
      * @var array
      */

@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Pieces\Database;
 
 use Spiral\ORM\Record;
@@ -22,6 +23,8 @@ use Spiral\ORM\Record;
  */
 class PieceLocation extends Record
 {
+    const DATABASE = 'pieces';
+
     /**
      * @var array
      */

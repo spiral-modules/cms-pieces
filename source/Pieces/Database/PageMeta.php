@@ -35,6 +35,8 @@ class PageMeta extends Record
 {
     use TimestampsTrait;
 
+    const DATABASE = 'pieces';
+
     const SCHEMA = [
         'id'          => 'primary',
 
