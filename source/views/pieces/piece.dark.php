@@ -13,6 +13,7 @@ $piece = $pieces->getPiece($id, $content, $view->getName(), $view->getNamespace(
 //Wrapping
 $wrapLeft = $wrapRight = "";
 
+//Wrapping block
 if ('${wrap|div}' != '') {
     $wrapLeft = '<${wrap}>';
     $wrapRight = '</${wrap}>';

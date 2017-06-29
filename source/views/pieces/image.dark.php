@@ -16,9 +16,7 @@ $decoded = json_decode($piece->content, true);
 ?>
 
 <?php if ($environment->getValue('cms.editable')): #compile ?>
-    <img data-piece="image" data-id="${name}" src="<?= $decoded['src'] #compile  ?>"
-         alt="<?= $decoded['alt'] #compile  ?>" node:attributes>
+    <img data-piece="image" data-id="${name}" src="<?= $decoded['src'] #compile ?>" alt="<?= $decoded['alt'] #compile ?>" node:attributes>
 <?php else: #compile ?>
-    <img src="<?= $decoded['src'] #compile  ?>" alt="<?= $decoded['alt'] #compile  ?>"
-         node:attributes>
+    <img src="<?= $decoded['src'] #compile   ?>" alt="<?= $decoded['alt'] #compile ?>" node:attributes>
 <?php endif; #compile ?>

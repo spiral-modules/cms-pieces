@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Dmitry Mironov
  */
+
 namespace Spiral\Pieces\Requests;
 
 use Spiral\Http\Request\RequestFilter;

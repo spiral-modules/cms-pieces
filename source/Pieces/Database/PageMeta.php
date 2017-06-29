@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Dmitry Mironov
  */
+
 namespace Spiral\Pieces\Database;
 
 use Spiral\Models\Accessors\SqlTimestamp;
@@ -35,12 +36,14 @@ class PageMeta extends Record
     use TimestampsTrait;
 
     const SCHEMA = [
-        'id' => 'primary',
+        'id'          => 'primary',
 
-        'namespace' => 'string',
-        'view'      => 'string',
-        'code'      => 'string',
+        //Location
+        'namespace'   => 'string',
+        'view'        => 'string',
+        'code'        => 'string',
 
+        //Content
         'title'       => 'string',
         'description' => 'text',
         'keywords'    => 'text',

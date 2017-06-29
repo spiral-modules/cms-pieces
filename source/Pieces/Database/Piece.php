@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Lev Seleznev
  */
+
 namespace Spiral\Pieces\Database;
 
 use Spiral\Models\Accessors\SqlTimestamp;
@@ -36,7 +37,7 @@ class Piece extends Record
     const SCHEMA = [
         'id'        => 'primary',
 
-        //Piece identification
+        //Piece code ID
         'code'      => 'string',
 
         //Piece content
@@ -64,17 +65,15 @@ class Piece extends Record
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
     /**
-     * todo: we might need filtering, strip php?
-     *
      * @param string $content
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
     }
@@ -82,7 +81,7 @@ class Piece extends Record
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }

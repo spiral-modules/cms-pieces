@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Pieces\Requests;
 
 use Spiral\Http\Request\RequestFilter;
@@ -39,7 +40,7 @@ class PieceRequest extends RequestFilter
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->getField('code');
     }
@@ -47,7 +48,7 @@ class PieceRequest extends RequestFilter
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         /** @var Isolator $isolator */
         $isolator = spiral(Isolator::class);

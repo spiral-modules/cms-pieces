@@ -13,33 +13,19 @@ $ ./spiral register spiral/pieces
 $ ./spiral up
 ```
 
-## Configuration
-
-### Setup routes
+### Add Bootloader
 
 ```php
-$http->addRoute(
-    (new Route('api_pieces', 'api/cms/pieces/<action>',
-        'Spiral\Pieces\Controllers\PiecesController::<action>')
-    )->withMiddleware(JsonParser::class)
-);
-$http->addRoute(
-    (new Route('api_meta', 'api/cms/meta/<action>',
-        'Spiral\Pieces\Controllers\MetaController::<action>')
-    )->withMiddleware(JsonParser::class)
-);
+const LOAD = [
+    //...
+    Spiral\Pieces\PiecesBootloaders::class,
+]
 ```
 
-You need JsonParser middleware or something similar only if your frontend editor sends json.
-
 ### Configure permissions
-
 Check `app/config/modules/pieces.php` for details.
 
-## Basic Usage
-
 ### Metadata
-
 There are two alternatives to include metadata to your pages: "static" and "runtime". First one will
 fully compile during views compilation and there will be no requests to database during page load.
 Second one will not.

@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Pieces\Configs;
 
 use Spiral\Core\InjectableConfig;
@@ -28,7 +29,7 @@ class PiecesConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function cmsPermission()
+    public function cmsPermission(): string
     {
         return $this->config['permission'];
     }
