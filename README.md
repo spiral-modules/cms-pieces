@@ -18,7 +18,7 @@ $ ./spiral up
 ```php
 const LOAD = [
     //...
-    Spiral\Pieces\PiecesBootloaders::class,
+    \Spiral\Pieces\Bootloaders\PiecesBootloaders::class,
 ]
 ```
 

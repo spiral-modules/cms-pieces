@@ -6,7 +6,7 @@
  * Time: 14:33
  */
 
-namespace Spiral\Pieces;
+namespace Spiral\Pieces\Bootloaders;
 
 use Psr7Middlewares\Middleware\Payload;
 use Spiral\Core\Bootloaders\Bootloader;
