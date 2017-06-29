@@ -78,7 +78,7 @@ class ImagesController extends Controller
 
         return [
             'status' => 200,
-            'fields' => $this->packImage($image),
+            'data' => $this->packImage($image),
         ];
     }
 
