@@ -7,12 +7,12 @@
 
 namespace Spiral\Pieces\Controllers;
 
-use Requests\Api\ImageRequest;
 use Spiral\Core\Controller;
 use Spiral\Core\Traits\AuthorizesTrait;
 use Spiral\Pieces\Configs\PiecesConfig;
 use Spiral\Pieces\Database\Image;
 use Spiral\Pieces\Images;
+use Spiral\Pieces\Requests\ImageRequest;
 use Spiral\Translator\Traits\TranslatorTrait;
 
 class ImagesController extends Controller

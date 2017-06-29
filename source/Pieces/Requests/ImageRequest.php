@@ -5,7 +5,7 @@
  * @author Dmitry Mironov
  */
 
-namespace Requests\Api;
+namespace Spiral\Pieces\Requests;
 
 use Psr\Http\Message\UploadedFileInterface;
 use Spiral\Http\Request\RequestFilter;
