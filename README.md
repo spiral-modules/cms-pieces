@@ -3,7 +3,7 @@
 This module provide ability to store page pieces data in database (currently ORM only) and
 access it via Web-API. Also it's compiles two versions of views: one for site editor and one for
 common site user. The functionality can be sometimes useful especially with something like
-[Redaxtor](https://redaxtor.github.io/).
+[WriteAway](https://writeaway.github.io/).
 
 ## Installation
 
