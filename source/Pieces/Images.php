@@ -20,6 +20,11 @@ use Zend\Diactoros\Stream;
 class Images extends Service
 {
     /**
+     * Random seed prefix.
+     */
+    const SEED_LENGTH = 8;
+
+    /**
      * @var PiecesConfig
      */
     private $config = null;
@@ -40,7 +45,7 @@ class Images extends Service
      */
     public function upload(Image $image, UploadedFileInterface $file): Image
     {
-        $seed = Strings::random(16);
+        $seed = Strings::random(self::SEED_LENGTH);
 
         $originalFilename = $this->createName($file, $seed);
         $thumbnailFilename = $this->createName($file, $seed, '-min');
@@ -102,7 +107,7 @@ class Images extends Service
      */
     private function getName(UploadedFileInterface $file): string
     {
-        return substr($file->getClientFilename(), -1 * (1 + strlen($this->getExtension($file))));
+        return substr($file->getClientFilename(), 0,-1 * (1 + strlen($this->getExtension($file))));
     }
 
     /**
