@@ -10,7 +10,7 @@ return [
     /*
      * Permission which is required for piece editing.
      */
-    'permission' => 'keeper.pieces.edit',
+    'permission' => 'vault.pieces.edit',
 
     /*
      * Image uploads.
