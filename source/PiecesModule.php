@@ -48,7 +48,7 @@ class PiecesModule implements ModuleInterface
         $registrator->configure('storage', 'servers', 'spiral/pieces', [
             "'webroot' => [",
             "    'class'   => Servers\LocalServer::class,",
-            "    'options' => '",
+            "    'options' => [",
             "        'home' => directory('root') . 'webroot/'",
             "    ]",
             " ],"
