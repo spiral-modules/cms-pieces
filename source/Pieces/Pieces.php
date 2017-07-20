@@ -17,6 +17,7 @@ use Spiral\Pieces\Database\PageMeta;
 use Spiral\Pieces\Database\Piece;
 use Spiral\Pieces\Database\PieceLocation;
 use Spiral\Security\Traits\GuardedTrait;
+use Spiral\Views\Exceptions\ViewsException;
 use Spiral\Views\ViewManager;
 
 /**
@@ -171,7 +172,11 @@ class Pieces extends Service
     {
         /** @var PieceLocation $location */
         foreach ($piece->locations as $location) {
-            $this->compileView($location->namespace, $location->view);
+            try {
+                $this->compileView($location->namespace, $location->view);
+            } catch (ViewsException $exception) {
+                $location->delete();
+            }
         }
     }
 
