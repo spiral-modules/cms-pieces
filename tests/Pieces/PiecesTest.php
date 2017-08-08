@@ -2,6 +2,8 @@
 
 namespace Spiral\Tests\Pieces;
 
+use Spiral\Core\Core;
+use Spiral\Debug\Dumper;
 use Spiral\Pieces\Database\PageMeta;
 use Spiral\Pieces\Database\PieceLocation;
 use Spiral\Pieces\Pieces;
@@ -111,11 +113,11 @@ class PiecesTest extends \Spiral\Tests\BaseTest
     {
         $this->deleteCacheFiles();
 
-        $env1 = $this->views->getEnvironment()->withDependency('value', function () {
-            return false;
+        $env1 = $this->views->getEnvironment()->withDependency('test-value', function () {
+            return "1";
         });
-        $env2 = $this->views->getEnvironment()->withDependency('value', function () {
-            return true;
+        $env2 = $this->views->getEnvironment()->withDependency('test-value', function () {
+            return "2";
         });
 
         $this->views->withEnvironment($env1)->render('default');
@@ -123,10 +125,17 @@ class PiecesTest extends \Spiral\Tests\BaseTest
         $this->views->withEnvironment($env1)->render('home');
         $this->views->withEnvironment($env2)->render('home');
 
-        /** @var ViewCacheLocator  $viewCacheLocator */
+        /** @var ViewCacheLocator $viewCacheLocator */
         $viewCacheLocator = $this->container->get(ViewCacheLocator::class);
         $files = $viewCacheLocator->getFiles('default');
 
+        $this->assertSame(2, count($files));
+
+        /** @var Pieces $pieces */
+        $pieces = $this->container->get(Pieces::class);
+        $pieces->compileView('default', 'default');
+
+        $files = $viewCacheLocator->getFiles('default');
         $this->assertSame(2, count($files));
     }
 }

@@ -64,6 +64,8 @@ class Pieces extends Service
     ) {
         $this->config = $config;
         $this->container = $container;
+        $this->cacheLocator = $cacheLocator;
+        $this->fileManager = $fileManager;
     }
 
     /**
