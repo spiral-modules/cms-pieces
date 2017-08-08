@@ -11,6 +11,7 @@ namespace Spiral\Pieces;
 use Spiral\Auth\ContextInterface;
 use Spiral\Core\ContainerInterface;
 use Spiral\Core\Service;
+use Spiral\Files\FileManager;
 use Spiral\ORM\RecordEntity;
 use Spiral\Pieces\Configs\PiecesConfig;
 use Spiral\Pieces\Database\PageMeta;
@@ -18,6 +19,7 @@ use Spiral\Pieces\Database\Piece;
 use Spiral\Pieces\Database\PieceLocation;
 use Spiral\Security\Traits\GuardedTrait;
 use Spiral\Views\Exceptions\ViewsException;
+use Spiral\Views\ViewCacheLocator;
 use Spiral\Views\ViewManager;
 
 /**
@@ -42,12 +44,24 @@ class Pieces extends Service
      */
     protected $container;
 
+    /** @var ViewCacheLocator */
+    protected $cacheLocator;
+
+    /** @var FileManager */
+    protected $fileManager;
+
     /**
      * @param \Spiral\Pieces\Configs\PiecesConfig $config
      * @param \Spiral\Core\ContainerInterface     $container
+     * @param ViewCacheLocator   $cacheLocator
+     * @param FileManager        $fileManager
      */
-    public function __construct(PiecesConfig $config, ContainerInterface $container)
-    {
+    public function __construct(
+        PiecesConfig $config,
+        ContainerInterface $container,
+        ViewCacheLocator $cacheLocator,
+        FileManager $fileManager
+    ) {
         $this->config = $config;
         $this->container = $container;
     }
@@ -149,8 +163,11 @@ class Pieces extends Service
     public function compileView(string $namespace, string $view)
     {
         $environment = $this->views->getEnvironment();
-
         $viewPath = $namespace . ViewManager::NS_SEPARATOR . $view;
+
+        foreach ($this->cacheLocator->getFiles($view, $namespace) as $file) {
+            $this->fileManager->delete($file);
+        }
 
         //Compile for editors
         $this->views->withEnvironment($environment->withDependency('cms.editable', function () {

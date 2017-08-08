@@ -5,10 +5,18 @@ namespace Spiral\Tests\Pieces;
 use Spiral\Pieces\Database\PageMeta;
 use Spiral\Pieces\Database\PieceLocation;
 use Spiral\Pieces\Pieces;
+use Spiral\Views\ViewCacheLocator;
 use Symfony\Component\DomCrawler\Crawler;
 
 class PiecesTest extends \Spiral\Tests\BaseTest
 {
+    protected function deleteCacheFiles()
+    {
+        foreach ($this->files->getFiles($this->views->getEnvironment()->cacheDirectory()) as $filename) {
+            $this->files->delete($filename);
+        }
+    }
+
     public function testPiece()
     {
         /** @var Pieces $pieces */
@@ -17,7 +25,7 @@ class PiecesTest extends \Spiral\Tests\BaseTest
 
         $this->assertNotNull($piece);
         $this->assertSame('Sample.', trim($piece->content));
-        $this->assertSame(1, $piece->locations->count());
+        $this->assertSame(2, $piece->locations->count());
 
         /** @var PieceLocation $location */
         $location = $piece->locations->getIterator()[0];
@@ -96,6 +104,29 @@ class PiecesTest extends \Spiral\Tests\BaseTest
         // piece div
         $div = $crawler->filterXPath('//body');
         $this->assertGreaterThan(0, $div->count());
-        $this->assertSame('Sample.', trim($div->html()));
+        $this->assertContains('Sample.', trim($div->html()));
+    }
+
+    public function testRecompileCache()
+    {
+        $this->deleteCacheFiles();
+
+        $env1 = $this->views->getEnvironment()->withDependency('value', function () {
+            return false;
+        });
+        $env2 = $this->views->getEnvironment()->withDependency('value', function () {
+            return true;
+        });
+
+        $this->views->withEnvironment($env1)->render('default');
+        $this->views->withEnvironment($env2)->render('default');
+        $this->views->withEnvironment($env1)->render('home');
+        $this->views->withEnvironment($env2)->render('home');
+
+        /** @var ViewCacheLocator  $viewCacheLocator */
+        $viewCacheLocator = $this->container->get(ViewCacheLocator::class);
+        $files = $viewCacheLocator->getFiles('default');
+
+        $this->assertSame(2, count($files));
     }
 }
